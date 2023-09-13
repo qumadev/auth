@@ -1,24 +1,46 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import {FormGroup,FormControl,Validators} from '@angular/forms';
 import {ApiService} from '../../services/api/api.service';
 import {LoginI} from '../../models/login.interface';
+import {ResponseI} from '../../models/response.interface';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
     username: new FormControl('',Validators.required),
     password: new FormControl('',Validators.required)
   })
 
-  constructor(private api:ApiService){ }
+  errorStatus:boolean = false;
+  errorMsg:any = "Credenciales incorrectas";
+
+  ngOnInit(): void{
+    this.checkLocalStorage
+  }
+
+  checkLocalStorage(){
+    if(localStorage.getItem("token")){
+      console.log("paso")
+      this.router.navigate(["dashboard"])
+    }
+  }
+
+  constructor(private api:ApiService, private router:Router){ }
 
   onLogin(form: any){
-    this.api.loginByEmail(form).subscribe(data =>
-      console.log(data))
+    this.api.loginByEmail(form).subscribe(data =>{
+      
+      let dataResponse:ResponseI = data
+      if(dataResponse.tokenType == "Bearer"){
+        localStorage.setItem("token",dataResponse.accessToken)
+        this.router.navigate(['dashboard'])
+      }
+    })
   }
 }

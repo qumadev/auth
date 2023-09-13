@@ -4,6 +4,11 @@ import {ResponseI} from '../../models/response.interface';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
+/* */
+// import {  HttpErrorResponse } from '@angular/common/http';
+// import {  throwError } from 'rxjs';
+// import { catchError } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,4 +22,5 @@ export class ApiService {
     let uri = this.url + "services/auth/signin"
     return this.http.post<ResponseI>(uri,form)
   }
+
 }
