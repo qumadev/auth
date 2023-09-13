@@ -15,7 +15,9 @@
     </form>
 
     <!-- Remind Passowrd -->
-
+    <div class="alert alert-danger" *ngIf="errorStatus">
+      <p>{{errorMsg}}</p>
+    </div>
 
   </div>
 </div>
