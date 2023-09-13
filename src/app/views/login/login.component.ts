@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
     password: new FormControl('',Validators.required)
   })
 
-  errorStatus:boolean = false;
-  errorMsg:any = "Credenciales incorrectas";
+  errorOccurred: boolean = false;
+  errorMessage: string = '';
 
   ngOnInit(): void{
     this.checkLocalStorage
@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
 
   checkLocalStorage(){
     if(localStorage.getItem("token")){
-      console.log("paso")
       this.router.navigate(["dashboard"])
     }
   }
@@ -41,6 +40,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("token",dataResponse.accessToken)
         this.router.navigate(['dashboard'])
       }
+    },(error)=>{
+      this.errorOccurred=true
+      this.errorMessage=error
     })
   }
 }

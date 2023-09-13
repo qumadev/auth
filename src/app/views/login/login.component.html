@@ -14,10 +14,12 @@
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
 
-    <!-- Remind Passowrd -->
-    <div class="alert alert-danger" *ngIf="errorStatus">
-      <p>{{errorMsg}}</p>
+    
+    <div class="alert alert-danger" *ngIf="errorOccurred">
+      <p>{{errorMessage}}</p>
     </div>
+    <!-- <app-error-message *ngIf="errorOccurred" [errorMessage]="errorMessage"></app-error-message> -->
+
 
   </div>
 </div>
